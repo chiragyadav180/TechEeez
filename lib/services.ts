@@ -1,5 +1,6 @@
 export type Service = {
   slug:
+    | "ai-solutions"
     | "web-development"
     | "mobile-development"
     | "cloud-solutions"
@@ -7,7 +8,10 @@ export type Service = {
     | "cybersecurity"
     | "system-integration";
   title: string;
+  shortLabel: string;
   shortDescription: string;
+  pitch: string;
+  accent: string;
   capabilities: string[];
   approach: string[];
   benefits: string[];
@@ -16,10 +20,51 @@ export type Service = {
 
 export const services: Service[] = [
   {
+    slug: "ai-solutions",
+    title: "AI Solutions",
+    shortLabel: "AI",
+    shortDescription:
+      "Intelligent automation, custom AI products, and machine learning that turn data into decisions.",
+    pitch:
+      "We design AI assistants, automation, and prediction systems that sit inside real workflows — so teams spend less time on repetitive work and more time on growth.",
+    accent: "#c4b5fd",
+    capabilities: [
+      "Custom AI assistants and internal copilots",
+      "Process automation with machine learning",
+      "Document intelligence and computer vision",
+    ],
+    approach: [
+      "Identify high-value tasks that AI can actually complete",
+      "Train or integrate models around your business data",
+      "Ship guarded, measurable workflows into production",
+    ],
+    benefits: [
+      "Faster operational decisions",
+      "Lower manual workload",
+      "Products that feel intelligent, not bolted on",
+    ],
+    faq: [
+      {
+        question: "Do you build custom models or use existing AI platforms?",
+        answer:
+          "Both. We choose the path based on data quality, privacy needs, cost, and how tightly the AI must fit your product.",
+      },
+      {
+        question: "Can AI be added to an existing website or internal tool?",
+        answer:
+          "Yes. Many projects start by embedding assistants, search, or automation into systems you already use.",
+      },
+    ],
+  },
+  {
     slug: "web-development",
     title: "Web Development",
+    shortLabel: "Web",
     shortDescription:
       "Responsive design, modern frameworks and performance optimization.",
+    pitch:
+      "We build fast, conversion-ready websites and web apps — clean interfaces, scalable architecture, and performance that feels instant on every device.",
+    accent: "#67e8f9",
     capabilities: [
       "Responsive interfaces across devices",
       "Modern frontend architectures",
@@ -51,8 +96,12 @@ export const services: Service[] = [
   {
     slug: "mobile-development",
     title: "Mobile Development",
+    shortLabel: "Mobile",
     shortDescription:
       "iOS and Android applications, cross-platform solutions and user-centric design.",
+    pitch:
+      "From native feel to cross-platform speed, we ship mobile apps people actually enjoy using — with clear journeys, stable releases, and room to grow.",
+    accent: "#5eead4",
     capabilities: [
       "iOS and Android app delivery",
       "Cross-platform implementation",
@@ -84,8 +133,12 @@ export const services: Service[] = [
   {
     slug: "cloud-solutions",
     title: "Cloud Solutions",
+    shortLabel: "Cloud",
     shortDescription:
       "AWS and Azure focused services, scalable architecture and DevOps integration.",
+    pitch:
+      "We design cloud architecture that scales with demand — reliable infrastructure, smoother releases, and systems that stay online as the business grows.",
+    accent: "#7dd3fc",
     capabilities: [
       "AWS and Azure cloud consulting",
       "Scalable architecture design",
@@ -117,8 +170,12 @@ export const services: Service[] = [
   {
     slug: "data-analytics",
     title: "Data Analytics",
+    shortLabel: "Analytics",
     shortDescription:
       "Business intelligence, data visualization and predictive analytics.",
+    pitch:
+      "We turn scattered data into dashboards and forecasts your team can act on — clearer metrics, faster reporting, and insight before the next decision.",
+    accent: "#86efac",
     capabilities: [
       "Business intelligence reporting",
       "Data visualization experiences",
@@ -150,8 +207,12 @@ export const services: Service[] = [
   {
     slug: "cybersecurity",
     title: "Cybersecurity",
+    shortLabel: "Security",
     shortDescription:
       "Security audits, threat protection and compliance support.",
+    pitch:
+      "We harden products and infrastructure with practical security — audits, threat protection, and compliance support that reduce risk without slowing delivery.",
+    accent: "#5eead4",
     capabilities: [
       "Security audit engagements",
       "Threat protection planning",
@@ -183,8 +244,12 @@ export const services: Service[] = [
   {
     slug: "system-integration",
     title: "System Integration",
+    shortLabel: "Integration",
     shortDescription:
       "API development, legacy system modernization and workflow automation.",
+    pitch:
+      "We connect the tools your business already runs — APIs, legacy modernization, and automation that remove copy-paste work between systems.",
+    accent: "#94a3b8",
     capabilities: [
       "API development and integration",
       "Legacy system modernization",
@@ -217,3 +282,6 @@ export const services: Service[] = [
 
 export const getServiceBySlug = (slug: string) =>
   services.find((service) => service.slug === slug);
+
+export const serviceImagePath = (slug: Service["slug"]) =>
+  `/services/${slug}.png`;

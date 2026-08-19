@@ -3,50 +3,54 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/button-link";
+import { Magnetic } from "@/components/animations/magnetic";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    let lastY = 0;
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      setScrolled(currentY > 24);
-      setHidden(currentY > lastY && currentY > 120);
-      lastY = currentY;
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
+      if (event.key === "Escape") setIsOpen(false);
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-white/15 bg-zinc-900/82 backdrop-blur-xl"
-          : "border-white/10 bg-zinc-900/45 backdrop-blur-xl"
-      } ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+          ? "border-b border-white/10 bg-[#08090A]/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent"
+      }`}
     >
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 md:px-8">
-        <Link href="/" className="inline-flex items-center gap-2" aria-label={siteConfig.name}>
-          <span className="inline-flex items-center justify-center rounded-md bg-white p-1.5 shadow-sm">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2.5"
+          aria-label={siteConfig.name}
+        >
+          <span className="inline-flex items-center justify-center rounded-md bg-white p-1.5">
             <Image
               src="/icon.png"
               alt={`${siteConfig.name} logo`}
@@ -56,58 +60,80 @@ export function Navbar() {
               className="h-[34px] w-[34px]"
             />
           </span>
-          <span className="text-sm font-bold tracking-[0.16em] text-white">
+          <span className="font-[family-name:var(--font-display)] text-sm font-semibold tracking-[0.16em] text-white">
             {siteConfig.shortName}
           </span>
         </Link>
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {siteConfig.navLinks.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm transition ${
-                  active ? "text-cyan-300" : "text-white/80 hover:text-white"
+                className={`relative text-sm transition ${
+                  active ? "text-white" : "text-white/70 hover:text-white"
                 }`}
               >
                 {item.label}
+                {active && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute -bottom-1 left-0 h-px w-full bg-cyan-300"
+                  />
+                )}
               </Link>
             );
           })}
-          <ButtonLink href="/contact" className="px-4 py-2 text-xs">
-            Start a Project
-          </ButtonLink>
+          <Magnetic>
+            <ButtonLink href="/contact" className="px-4 py-2 text-xs">
+              Start a Project
+            </ButtonLink>
+          </Magnetic>
         </nav>
         <button
           type="button"
-          aria-label="Toggle navigation menu"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isOpen}
+          aria-controls="mobile-nav"
           onClick={() => setIsOpen((value) => !value)}
           className="rounded-md border border-white/20 p-2 text-white md:hidden"
         >
           {isOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
-      {isOpen && (
-        <div className="border-t border-white/10 bg-zinc-950/95 px-4 py-4 md:hidden">
-          <nav className="flex flex-col gap-3">
-            {siteConfig.navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="mobile-nav"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="border-t border-white/10 bg-[#08090A]/95 px-4 py-5 backdrop-blur-xl md:hidden"
+          >
+            <nav className="flex flex-col gap-2" aria-label="Mobile">
+              {siteConfig.navLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-md px-2 py-3 text-white/90 hover:bg-white/5"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <ButtonLink
+                href="/contact"
+                className="mt-2 justify-center"
                 onClick={() => setIsOpen(false)}
-                className="rounded px-2 py-2 text-white/90 hover:bg-white/5"
               >
-                {item.label}
-              </Link>
-            ))}
-            <ButtonLink href="/contact" className="mt-2 justify-center">
-              Start a Project
-            </ButtonLink>
-          </nav>
-        </div>
-      )}
+                Start a Project
+              </ButtonLink>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

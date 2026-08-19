@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <PageShell
       title="Engineering built around business goals."
-      description="Tech Eeez is a software solutions company focused on innovation and business growth. We combine modern engineering with practical delivery across web, mobile, cloud, data, security, and integration."
+      description="Tech Eeez is a software solutions company focused on innovation and business growth. We combine modern engineering with practical delivery across AI, web, mobile, cloud, data, security, and integration."
     >
       <section className="grid gap-4 md:grid-cols-3">
         {siteConfig.stats.map((item) => (

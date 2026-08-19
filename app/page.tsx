@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Premium software solutions for web, mobile, cloud, analytics, cybersecurity and integration.",
+    "Premium software solutions for AI, web, mobile, cloud, analytics, cybersecurity and integration.",
   alternates: {
     canonical: "/",
   },

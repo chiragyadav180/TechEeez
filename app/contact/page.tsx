@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Talk to Tech Eeez about web, mobile, cloud, analytics, cybersecurity, or integration projects.",
+    "Talk to Tech Eeez about AI, web, mobile, cloud, analytics, cybersecurity, or integration projects.",
   alternates: { canonical: "/contact" },
 };
 

@@ -7,15 +7,15 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Explore Tech Eeez services in web, mobile, cloud, analytics, cybersecurity, and system integration.",
+    "Explore Tech Eeez services in AI, web, mobile, cloud, analytics, cybersecurity, and system integration.",
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
   return (
     <PageShell
-      title="Six capabilities. One technology partner."
-      description="Our services are designed to help businesses build faster, scale confidently, and operate with clarity."
+      title="Seven capabilities. One technology partner."
+      description="Our services are designed to help businesses build faster, scale confidently, and operate with clarity — from AI and web development to cloud, mobile, and secure systems."
     >
       <div className="grid gap-4 md:grid-cols-2">
         {services.map((service, index) => (
