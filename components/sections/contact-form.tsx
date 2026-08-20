@@ -58,8 +58,12 @@ export function ContactForm() {
         throw new Error(data.message ?? "Could not submit your message.");
       }
 
+      const data = (await response.json()) as { message?: string };
       setStatus("success");
-      setMessage("Thanks! Your message has been received.");
+      setMessage(
+        data.message ??
+          "Thanks! Your message has been received by the API.",
+      );
       setFormState(initialState);
     } catch (error) {
       setStatus("error");
@@ -74,7 +78,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8"
+      className="space-y-4 border border-white/10 bg-white/[0.03] p-6 md:p-8"
     >
       <div className="grid gap-4 md:grid-cols-2">
         <label className="space-y-2 text-sm text-white/80">
@@ -84,7 +88,7 @@ export function ContactForm() {
             onChange={(event) =>
               setFormState((prev) => ({ ...prev, fullName: event.target.value }))
             }
-            className="w-full rounded-xl border border-white/20 bg-zinc-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+            className="w-full border border-white/15 bg-[#0c0d10] px-4 py-3 text-white outline-none transition focus:border-cyan-300/70 focus:shadow-[0_0_0_3px_rgba(103,232,249,0.12)]"
             required
           />
         </label>
@@ -96,7 +100,7 @@ export function ContactForm() {
             onChange={(event) =>
               setFormState((prev) => ({ ...prev, email: event.target.value }))
             }
-            className="w-full rounded-xl border border-white/20 bg-zinc-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+            className="w-full border border-white/15 bg-[#0c0d10] px-4 py-3 text-white outline-none transition focus:border-cyan-300/70 focus:shadow-[0_0_0_3px_rgba(103,232,249,0.12)]"
             required
           />
         </label>
@@ -109,7 +113,7 @@ export function ContactForm() {
             onChange={(event) =>
               setFormState((prev) => ({ ...prev, phone: event.target.value }))
             }
-            className="w-full rounded-xl border border-white/20 bg-zinc-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+            className="w-full border border-white/15 bg-[#0c0d10] px-4 py-3 text-white outline-none transition focus:border-cyan-300/70 focus:shadow-[0_0_0_3px_rgba(103,232,249,0.12)]"
           />
         </label>
         <label className="space-y-2 text-sm text-white/80">
@@ -119,7 +123,7 @@ export function ContactForm() {
             onChange={(event) =>
               setFormState((prev) => ({ ...prev, company: event.target.value }))
             }
-            className="w-full rounded-xl border border-white/20 bg-zinc-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+            className="w-full border border-white/15 bg-[#0c0d10] px-4 py-3 text-white outline-none transition focus:border-cyan-300/70 focus:shadow-[0_0_0_3px_rgba(103,232,249,0.12)]"
           />
         </label>
       </div>
@@ -142,7 +146,7 @@ export function ContactForm() {
           onChange={(event) =>
             setFormState((prev) => ({ ...prev, message: event.target.value }))
           }
-          className="w-full rounded-xl border border-white/20 bg-zinc-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+          className="w-full border border-white/15 bg-[#0c0d10] px-4 py-3 text-white outline-none transition focus:border-cyan-300/70 focus:shadow-[0_0_0_3px_rgba(103,232,249,0.12)]"
           required
         />
       </label>
